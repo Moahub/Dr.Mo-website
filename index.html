@@ -3,61 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dr MO | Computational Geophysics & Scientific Software Solutions</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <title>Dr MO — Computational Geophysics & Software Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
     :root {
-      --brand-bg: #0e1726;  /* deep business-tech */
-      --brand-surface: #141c2f; /* card surface */
-      --brand-accent: #1ea7fd; /* action/link */
-      --brand-accent-2: #64dfdf; /* subtle gradient accent */
-      --brand-text: #e6e9ef; /* body text */
-      --brand-muted: #9aa3b2;
+      --primary: #00b4d8;
+      --secondary: #48cae4;
+      --bg-dark: #0b132b;
+      --bg-section: #1c2541;
+      --text-light: #e0e1dd;
     }
 
-    body { background: var(--brand-bg); color: var(--brand-text); }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
 
-    nav.container-fluid { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    nav.container-fluid {
+      background: rgba(11,19,43,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
 
-    a { color: var(--brand-accent); }
-    a[role="button"], button { border-radius: 999px; padding-inline: 1.25rem; }
+    nav a {
+      color: var(--secondary);
+    }
 
-    main.container { padding-top: 2rem; padding-bottom: 2rem; }
+    /* HERO SECTION */
+    .hero {
+      background: linear-gradient(135deg, rgba(0,180,216,0.2), rgba(72,202,228,0.05)),
+                  url('https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      text-align: center;
+      padding: 8rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
-    .grid section { background: var(--brand-surface); border-radius: 16px; padding: 2rem; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .hero h1 {
+      font-size: 2.8rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
 
-    hgroup h2 { color: white; margin-bottom: .25rem; }
-    hgroup h3 { color: var(--brand-muted); font-weight: 500; }
+    .hero h2 {
+      color: var(--secondary);
+      font-weight: 400;
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+    }
 
-    figure { margin-top: 1rem; }
-    figure img { width: 100%; height: auto; border-radius: 14px; }
-    figcaption { color: var(--brand-muted); font-size: .9rem; }
+    .hero a[role="button"] {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      margin: 0.5rem;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
 
-    ul.feature-list { columns: 2; gap: 2rem; margin: 0; padding-left: 1rem; }
-    @media (max-width: 900px) { ul.feature-list { columns: 1; } }
+    section {
+      padding: 4rem 2rem;
+      background: var(--bg-section);
+      border-radius: 12px;
+      margin-top: 2rem;
+    }
 
-    .pill { display: inline-block; background: rgba(100,223,223,0.12); color: #b8f3f3; border: 1px solid rgba(100,223,223,0.3); padding: .35rem .7rem; border-radius: 999px; font-size: .85rem; }
+    section h2 {
+      color: white;
+      border-left: 5px solid var(--primary);
+      padding-left: 0.5rem;
+      margin-bottom: 1rem;
+    }
 
-    /* Callouts */
-    .callout { background: linear-gradient(135deg, rgba(30,167,253,0.08), rgba(100,223,223,0.08)); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem 1.25rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
 
-    /* Cards row */
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .card { background: var(--brand-surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.25rem; }
-    .card h4 { margin-top: .25rem; margin-bottom: .5rem; }
-    .card p { color: var(--brand-muted); font-size: .95rem; }
-    @media (max-width: 1024px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      background: #1b263b;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+    }
 
-    /* Subscribe/Contact bar */
-    section[aria-label="Subscribe example"] article { background: var(--brand-surface); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--secondary);
+    }
 
-    footer.container { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem; padding-bottom: 3rem; }
+    .card h3 {
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
 
-    /* Subtle separators */
-    hr.soft { border: 0; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.15), rgba(255,255,255,0)); margin: 1.5rem 0; }
+    .card p {
+      color: #c9c9c9;
+      font-size: 0.95rem;
+    }
+
+    figure img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    footer {
+      background: #0b132b;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    footer a {
+      color: var(--primary);
+    }
+
+    input, textarea {
+      background: #1b263b;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-light);
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+    }
   </style>
 </head>
 <body>
+
   <!-- Navigation -->
   <nav class="container-fluid">
     <ul>
@@ -70,127 +152,75 @@
     </ul>
   </nav>
 
-  <!-- Main -->
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>PINN-Powered Intelligence for Energy & Mining</h1>
+    <h2>AI + Physics Decision Labs • Log/Core Modeling • Operational Enablement</h2>
+    <a href="#services" role="button">Our Services</a>
+    <a href="#contact" role="button" class="outline">Get in Touch</a>
+  </header>
+
+  <!-- About -->
   <main class="container">
-    <div class="grid">
-      <section>
-        <hgroup>
-          <h2>Computational Geophysics for Business Impact</h2>
-          <h3>Scientific Software & Inversion Solutions • PINN Research • Executive Education</h3>
-        </hgroup>
-        <p class="callout"><span class="pill">Value Proposition</span> Partner with a PhD geophysicist to transform subsurface data into decisions. I build robust <strong>Python</strong> & <strong>MATLAB</strong> tools, deliver <strong>inversion</strong> at scale, and apply <strong>Physics-Informed Neural Networks (PINNs)</strong> for well logging, gravity, GPR, and seismic.</p>
+    <section id="about">
+      <h2>About Dr MO</h2>
+      <p><strong>Dr Moataz Mohamed Gomaa Abdelrahman</strong> (PhD, University of Miskolc) is a computational geophysicist and software developer specializing in inversion, physics-informed neural networks (PINNs), and data-driven subsurface modeling. He builds scientific software solutions for energy and mining industries using Python and MATLAB, bridging academic innovation and industrial application.</p>
+    </section>
 
-        <figure>
-          <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=1600&q=80" alt="High-end geophysics workstation and code on multiple monitors" />
-          <figcaption><a href="https://unsplash.com/photos/XJXWbfSo2f0" target="_blank" rel="noopener">Image via Unsplash</a></figcaption>
-        </figure>
-
-        <h3 id="services">Services</h3>
-        <p>I deliver end‑to‑end solutions—from scoping and feasibility to deployment and training—tailored to research institutes, energy & mining companies, and engineering firms.</p>
-        <ul class="feature-list">
-          <li><strong>Custom Scientific Software</strong> — Toolchains, libraries, & GUIs in <em>Python</em> and <em>MATLAB</em> for geophysical processing and inversion.</li>
-          <li><strong>Inversion at Scale</strong> — Classical and regularized inversions for <em>well logging, gravity, GPR, seismic</em>.</li>
-          <li><strong>PINN Solutions</strong> — Physics‑informed modeling for interval inversion & full‑field reconstruction with UQ.</li>
-          <li><strong>Consulting</strong> — Model design, workflow optimization, code reviews, and technical due diligence.</li>
-          <li><strong>Courses & Executive Training</strong> — Focused workshops for teams: inversion fundamentals, PINN for geophysics, reproducible research.</li>
-          <li><strong>Data to Insight</strong> — Project framing, KPIs, validation plans, and reporting aligned with business outcomes.</li>
-        </ul>
-
-        <div class="cards" style="margin-top:1rem;">
-          <article class="card">
-            <small class="pill">Software</small>
-            <h4>Python & MATLAB Engineering</h4>
-            <p>Robust packages, unit‑tested pipelines, and clean APIs ready for your R&D or production environments.</p>
-          </article>
-          <article class="card">
-            <small class="pill">Inversion</small>
-            <h4>From Data to Models</h4>
-            <p>Deterministic and hybrid methods, with model selection and uncertainty assessment built‑in.</p>
-          </article>
-          <article class="card">
-            <small class="pill">Education</small>
-            <h4>Courses & Workshops</h4>
-            <p>Customized sessions for scientists and engineers—hands‑on, case‑study driven, and tool‑oriented.</p>
-          </article>
+    <!-- Services -->
+    <section id="services">
+      <h2>Services</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Scientific Software Development</h3>
+          <p>Custom tools in Python and MATLAB for inversion, signal processing, and AI-based interpretation.</p>
         </div>
-
-        <figure>
-          <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=1600&q=80" alt="Data analysis and scientific computing code" />
-          <figcaption><a href="https://unsplash.com/photos/p-KCm6xB9I0" target="_blank" rel="noopener">Image via Unsplash</a></figcaption>
-        </figure>
-
-        <h3 id="research">Research & Thought Leadership</h3>
-        <p>I publish, teach, and prototype at the intersection of physics and machine learning: <em>acoustic ocean tomography, interval inversion, and PINN frameworks</em>. Follow along via my <strong>YouTube</strong> channel and research profiles.</p>
-
-        <div class="cards" style="margin-top:1rem;">
-          <article class="card">
-            <small class="pill">YouTube</small>
-            <h4>Dr MO — Tech Briefings</h4>
-            <p>Short, practical videos on inversion, PINNs, and scientific software patterns. Tutorials for teams.</p>
-            <p><a href="https://youtube.com/@DrMO" target="_blank" rel="noopener">Visit Channel →</a></p>
-          </article>
-          <article class="card">
-            <small class="pill">Profiles</small>
-            <h4>ResearchGate & ORCID</h4>
-            <p>Publications, datasets, and ongoing projects—stay current with my latest work and collaborations.</p>
-            <p><a href="https://www.researchgate.net/profile/Dr-MO" target="_blank" rel="noopener">ResearchGate →</a> • <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID →</a></p>
-          </article>
-          <article class="card">
-            <small class="pill">Network</small>
-            <h4>LinkedIn</h4>
-            <p>Connect for consulting, partnerships, and opportunities in geophysics and scientific computing.</p>
-            <p><a href="https://www.linkedin.com/in/dr-mo" target="_blank" rel="noopener">LinkedIn →</a></p>
-          </article>
+        <div class="card">
+          <h3>Computational Inversion</h3>
+          <p>Advanced inversion methods for well logging, gravity, GPR, and seismic data integration.</p>
         </div>
+        <div class="card">
+          <h3>PINN Modeling & Research</h3>
+          <p>Physics-informed neural networks for petrophysical intelligence and subsurface simulation.</p>
+        </div>
+        <div class="card">
+          <h3>Consulting & Training</h3>
+          <p>Advisory and courses on computational geophysics, machine learning integration, and data analytics for scientists and engineers.</p>
+        </div>
+      </div>
+    </section>
 
-        <figure>
-          <img src="https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&w=1600&q=80" alt="Research team discussing technical roadmap" />
-          <figcaption><a href="https://unsplash.com/photos/m_HRfLhgABo" target="_blank" rel="noopener">Image via Unsplash</a></figcaption>
-        </figure>
+    <!-- Research -->
+    <section id="research">
+      <h2>Research Highlights</h2>
+      <p>Dr MO leads projects combining physics-based modeling and AI to improve subsurface characterization and decision support. Focus areas include PINN inversion, hybrid learning systems, and AI-accelerated geophysical workflows.</p>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&w=1600&q=80" alt="Geophysical research and AI models" />
+      </figure>
+    </section>
 
-        <h3>Engagement Models</h3>
-        <p>Choose a model aligned with your goals and timelines:</p>
-        <ul>
-          <li><strong>Advisory</strong> (monthly retainer) — strategy, reviews, second opinions.</li>
-          <li><strong>Project</strong> (fixed scope) — deliverables, milestones, documentation.</li>
-          <li><strong>Embedded</strong> (fractional) — part‑time integration with your team.</li>
-        </ul>
-
-        <hr class="soft" />
-
-        <h3>Recent Focus Areas</h3>
-        <p>PINN‑based interval inversion, high‑frequency acoustic tomography, reproducible inversion workflows, and data‑driven petrophysics.</p>
-
-      </section>
-    </div>
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Contact Dr MO</h2>
+      <form class="grid">
+        <input type="text" id="name" name="name" placeholder="Your Name" required />
+        <input type="email" id="email" name="email" placeholder="Your Email" required />
+        <textarea id="message" name="message" rows="4" placeholder="Your Message"></textarea>
+        <button type="submit" onclick="event.preventDefault()">Send Message</button>
+      </form>
+      <p style="margin-top:1rem;">Email: <a href="mailto:contact@drmo-consulting.com">contact@drmo-consulting.com</a></p>
+    </section>
   </main>
 
-  <!-- Subscribe / Contact CTA -->
-  <section aria-label="Subscribe example">
-    <div class="container">
-      <article>
-        <hgroup>
-          <h2 id="contact">Start a Conversation</h2>
-          <h3>Consulting • Software • Courses</h3>
-        </hgroup>
-        <form class="grid">
-          <input type="text" id="firstname" name="firstname" placeholder="Your name" aria-label="Your name" required />
-          <input type="email" id="email" name="email" placeholder="Your email" aria-label="Your email" required />
-          <button type="submit" onclick="event.preventDefault()">Send Inquiry</button>
-        </form>
-        <p style="margin-top:.5rem;">Or email: <a href="mailto:contact@drmo-consulting.com">contact@drmo-consulting.com</a></p>
-      </article>
-    </div>
-  </section>
-
   <!-- Footer -->
-  <footer class="container">
+  <footer>
     <small>
-      <a href="https://youtube.com/@DrMO" target="_blank" rel="noopener">YouTube</a> •
-      <a href="https://www.researchgate.net/profile/Dr-MO" target="_blank" rel="noopener">ResearchGate</a> •
-      <a href="https://www.linkedin.com/in/dr-mo" target="_blank" rel="noopener">LinkedIn</a> •
-      <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
+      <a href="https://youtube.com/@DrMO" target="_blank">YouTube</a> • 
+      <a href="https://www.researchgate.net/profile/Dr-MO" target="_blank">ResearchGate</a> • 
+      <a href="https://www.linkedin.com/in/dr-mo" target="_blank">LinkedIn</a> • 
+      <a href="https://orcid.org/0000-0000-0000-0000" target="_blank">ORCID</a>
     </small>
   </footer>
+
 </body>
 </html>
