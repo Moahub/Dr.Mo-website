@@ -208,22 +208,50 @@
   </section>
 
   <!-- YouTube Hub -->
-  <section id="youtube">
-    <h2>Media and Learning Hub</h2>
-    <p>Visit <strong>Dr MO</strong> on YouTube for tutorials, research explainers, and computational geophysics insights.  
-    The channel serves as the central platform for education, outreach, and funding of open scientific software projects.</p>
-    <div class="card" style="text-align:center;margin-top:2rem;">
-      <!-- The embed will still render a blank player if no uploads exist -->
-      <iframe width="100%" height="360"
-        src="https://www.youtube.com/embed/videoseries?list=UUVCVgnzUAlVRH6qM1BZqRkqVQ"
-        title="Dr MO YouTube Channel" frameborder="0" allowfullscreen></iframe>
-      <p><a href="https://www.youtube.com/@Dr.Mo-geo" target="_blank" role="button" style="margin-top:1rem;">Visit Channel</a></p>
+  <section id="media" class="section">
+    <div class="container">
+      <h2>Media and Learning Hub</h2>
+      <p style="color: var(--text-muted); max-width: 700px; margin: 0 auto 2rem; text-align: center;">
+        Visit <strong>Dr MO</strong> on YouTube for tutorials, research explainers, and computational geophysics insights;
+        the channel serves as the central platform for education, outreach, and funding of open scientific software projects.
+      </p>
+  
+      <div style="
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        max-width: 800px;
+        margin: 0 auto;
+      ">
+        <h3 style="color: var(--text-primary); margin-bottom: 1rem;">
+          Visit Dr MO on YouTube
+        </h3>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem;">
+          Explore tutorials, research explainers, and insights in computational geophysics.
+          Subscribe to support open research and scientific software innovation.
+        </p>
+        <a href="https://www.youtube.com/@Dr.Mo-geo" target="_blank">
+          <button style="
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+          " onmouseover="this.style.background='hsl(199,95%,70%)'"
+             onmouseout="this.style.background='var(--primary)'">
+            Visit Channel
+          </button>
+        </a>
+      </div>
     </div>
-    <figure>
-      <img src="Scientific_computing_code_analysis_display_1b593081.png" alt="Scientific computing code analysis display">
-      <figcaption>Scientific computing and data analysis; core to AI-assisted inversion and modeling workflows.</figcaption>
-    </figure>
-  </section>
+</section>
+
 
   <!-- Research -->
   <section id="research">
