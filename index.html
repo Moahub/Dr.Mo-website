@@ -33,12 +33,21 @@
       padding:0.6rem 1rem;
     }
 
-    nav ul:first-child li strong{
-      color:var(--primary);
-      font-size:1.3rem;
-      text-shadow:0 0 8px rgba(0,180,216,0.8);
-      letter-spacing:0.03em;
+    nav ul:first-child li strong {
+      color: var(--primary);
+      font-size: 1.8rem;             /* increased size */
+      font-weight: 800;              /* stronger weight */
+      text-shadow: 0 0 10px rgba(0,200,255,0.85),
+                   0 0 20px rgba(0,180,255,0.4);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: transform 0.2s ease, text-shadow 0.2s ease;
     }
+    nav ul:first-child li strong:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 14px rgba(0,220,255,0.9);
+    }
+
 
     nav a[role="button"]{
       background:var(--primary);
@@ -211,7 +220,7 @@
     </div>
     <figure>
       <img src="Scientific_computing_code_analysis_display_1b593081.png" alt="Scientific computing code analysis display">
-      <figcaption>Scientific computing and data analysis — core to AI-assisted inversion and modeling workflows.</figcaption>
+      <figcaption>Scientific computing and data analysis; core to AI-assisted inversion and modeling workflows.</figcaption>
     </figure>
   </section>
 
