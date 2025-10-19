@@ -1,199 +1,601 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dr MO | Computational Geophysics & Scientific Software Solutions</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dr MO — Computational Geophysics — Design Guidelines</title>
+
+  <!-- Core CSS reset / system font stack -->
   <style>
-    :root {
-      --brand-bg: #0e1726;  /* deep business-tech */
-      --brand-surface: #141c2f; /* card surface */
-      --brand-accent: #1ea7fd; /* action/link */
-      --brand-accent-2: #64dfdf; /* subtle gradient accent */
-      --brand-text: #e6e9ef; /* body text */
-      --brand-muted: #9aa3b2;
+    /*
+      Design Guidelines implementation (single-file demo)
+      - Dark mode palette and tokens
+      - Responsive layout (mobile-first)
+      - Components: nav, callout, cards, pills, images, forms
+      - Smooth scroll, simple form validation + accessibility
+    */
+
+    :root{
+      /* Color tokens (HSL where provided) */
+      --bg: 14 23 38;            /* rgb-ish values kept as three numbers for convenience (used below) */
+      --surface: 20 28 47;
+      --primary-h: 199;
+      --primary-s: 95%;
+      --primary-l: 62%;
+      --secondary-h: 180;
+      --secondary-s: 74%;
+      --secondary-l: 64%;
+      --text-h: 220;
+      --text-s: 25%;
+      --text-l: 92%;
+      --muted-h: 220;
+      --muted-s: 17%;
+      --muted-l: 64%;
+
+      --primary: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
+      --secondary: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-l));
+      --bg-color: rgb(14,23,38);
+      --surface-color: rgb(20,28,47);
+      --text: hsl(var(--text-h) var(--text-s) var(--text-l));
+      --muted: hsl(var(--muted-h) var(--muted-s) var(--muted-l));
+
+      --glass-gradient: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      --callout-grad: linear-gradient(135deg, color-mix(in srgb, var(--primary) 10%, transparent), color-mix(in srgb, var(--secondary) 10%, transparent));
+
+      /* Spacing primitives (approx. Tailwind-like units, px values) */
+      --space-2: 0.5rem;   /* 8px */
+      --space-4: 1rem;     /* 16px */
+      --space-8: 2rem;     /* 32px */
+      --space-12: 3rem;    /* 48px */
+      --space-16: 4rem;    /* 64px */
+      --space-20: 5rem;
+      --space-24: 6rem;
+      --space-32: 8rem;
+
+      --radius-2xl: 16px;
+      --radius-xl: 14px;
+      --card-shadow: 0 8px 24px rgba(0,0,0,0.25);
+
+      --max-width: 1200px; /* approximates 7xl container */
+      --transition-fast: 180ms ease;
     }
 
-    body { background: var(--brand-bg); color: var(--brand-text); }
+    /* Base */
+    html { scroll-behavior: smooth; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: inherit; }
+    body {
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg-color);
+      color: var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      font-size:16px; /* body: 1rem */
+    }
 
-    nav.container-fluid { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    /* Container */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
 
-    a { color: var(--brand-accent); }
-    a[role="button"], button { border-radius: 999px; padding-inline: 1.25rem; }
+    /* Navigation: sticky, blur, transparent gradient overlay */
+    nav.header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--glass-gradient);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.06); /* 6% opacity */
+    }
+    .nav-inner {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding: 0.75rem 1rem;
+      max-width:var(--max-width);
+      margin: 0 auto;
+    }
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:0.75rem;
+      font-weight:700;
+      font-size:1rem;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+    .nav-links {
+      display:flex;
+      align-items:center;
+      gap:0.75rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration:none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 999px;
+      transition: color var(--transition-fast), background var(--transition-fast);
+    }
+    .nav-links a:hover, .nav-links a:focus {
+      color: var(--text);
+      outline: none;
+    }
+    .cta {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.45rem 1.25rem;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight:600;
+      transition: filter var(--transition-fast), transform var(--transition-fast);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    }
+    .cta:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
-    main.container { padding-top: 2rem; padding-bottom: 2rem; }
+    /* Main hero / section */
+    main { padding: 2rem 0; }
+    section.card-surface {
+      background: var(--surface-color);
+      border-radius: var(--radius-2xl);
+      padding: 2rem; /* p-8 (approx) */
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-    .grid section { background: var(--brand-surface); border-radius: 16px; padding: 2rem; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    h1.brand-title {
+      font-weight:800;
+      font-size:2.5rem; /* 40px */
+      line-height:1.05;
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.8px;
+      color: var(--text);
+    }
+    h2.section-title {
+      font-weight:600;
+      font-size:2rem; /* 32px */
+      margin: 0 0 0.5rem 0;
+      color: var(--text);
+    }
+    h3.subhead {
+      font-weight:500;
+      font-size:1.25rem; /* 20px */
+      color: var(--muted);
+      margin:0 0 1rem 0;
+    }
+    p.lead {
+      margin: 0 0 1rem 0;
+      color: var(--text);
+    }
 
-    hgroup h2 { color: white; margin-bottom: .25rem; }
-    hgroup h3 { color: var(--brand-muted); font-weight: 500; }
+    /* Callout */
+    .callout {
+      background: linear-gradient(135deg, rgba(30,167,253,0.08), rgba(100,223,223,0.08));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-xl);
+      padding: 1rem 1.25rem;
+      display:flex;
+      gap:0.75rem;
+      align-items:flex-start;
+    }
+    .pill {
+      display:inline-block;
+      background: rgba(100,223,223,0.12); /* cyan 12% */
+      color: #b8f3f3;
+      border: 1px solid rgba(100,223,223,0.3);
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      font-weight:600;
+    }
 
-    figure { margin-top: 1rem; }
-    figure img { width: 100%; height: auto; border-radius: 14px; object-fit: cover; }
-    figcaption { color: var(--brand-muted); font-size: .9rem; }
+    /* Figure / images */
+    figure {
+      margin: 1rem 0 0 0;
+    }
+    figure img {
+      width:100%;
+      height:auto;
+      border-radius: var(--radius-xl);
+      object-fit:cover;
+      display:block;
+    }
+    figcaption {
+      margin-top:0.5rem;
+      font-size:0.9rem;
+      color:var(--muted);
+    }
 
-    ul.feature-list { columns: 2; gap: 2rem; margin: 0; padding-left: 1rem; }
-    @media (max-width: 900px) { ul.feature-list { columns: 1; } }
+    /* Feature list columns */
+    .feature-list {
+      columns: 2;
+      column-gap: 2rem;
+      margin: 0.5rem 0 0 0;
+      padding-left: 1rem;
+      list-style: none;
+    }
+    .feature-list li { break-inside: avoid; margin: 0 0 0.75rem 0; color: var(--text); }
 
-    .pill { display: inline-block; background: rgba(100,223,223,0.12); color: #b8f3f3; border: 1px solid rgba(100,223,223,0.3); padding: .35rem .7rem; border-radius: 999px; font-size: .85rem; }
+    /* Cards grid */
+    .cards {
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top:1rem;
+    }
+    .card-item {
+      background: var(--surface-color);
+      border-radius: var(--radius-xl);
+      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--card-shadow);
+      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+    }
+    .card-item:hover, .card-item:focus-within {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .card-item h4 { margin: 0.25rem 0 0.5rem 0; color:var(--text); }
+    .card-item p { margin:0; color:var(--muted); }
 
-    /* Callouts */
-    .callout { background: linear-gradient(135deg, rgba(30,167,253,0.08), rgba(100,223,223,0.08)); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem 1.25rem; }
+    .card-pill {
+      display:inline-block;
+      background: rgba(100,223,223,0.12);
+      color: #b8f3f3;
+      border: 1px solid rgba(100,223,223,0.3);
+      padding: 0.35rem 0.7rem;
+      border-radius:999px;
+      font-size:0.85rem;
+      font-weight:600;
+    }
 
-    /* Cards row */
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .card { background: var(--brand-surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.25rem; }
-    .card h4 { margin-top: .25rem; margin-bottom: .5rem; }
-    .card p { color: var(--brand-muted); font-size: .95rem; }
-    @media (max-width: 1024px) { .cards { grid-template-columns: 1fr; } }
+    /* Research cards share same style */
+    .profile-grid { display:grid; grid-template-columns:1fr; gap:1rem; margin-top:1rem; }
 
-    /* Subscribe/Contact bar */
-    section[aria-label="Subscribe example"] article { background: var(--brand-surface); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    /* Engagement list */
+    .engagement-list { margin-top:1rem; color:var(--text); }
 
-    footer.container { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem; padding-bottom: 3rem; }
+    /* Contact form */
+    .contact-form {
+      margin-top:1rem;
+      background: transparent;
+      border-radius: var(--radius-xl);
+    }
+    .form-grid {
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    input[type="text"], input[type="email"]{
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      outline:none;
+      width:100%;
+    }
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(30,167,253,0.06);
+    }
+    .form-submit {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .form-submit:hover { filter: brightness(1.03); }
 
-    /* Subtle separators */
-    hr.soft { border: 0; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.15), rgba(255,255,255,0)); margin: 1.5rem 0; }
+    .form-row { display:flex; gap:0.75rem; }
+    .form-row .col { flex:1; }
+
+    /* Footer */
+    footer.site-footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 3rem 0 4rem 0;
+      color: var(--muted);
+      font-size:0.9rem;
+    }
+    footer .links { display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; }
+
+    /* Divider */
+    hr.soft {
+      border:0;
+      height:1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.15), rgba(255,255,255,0));
+      margin: 1.5rem 0;
+    }
+
+    /* Responsive breakpoints */
+    @media (min-width: 768px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .profile-grid { grid-template-columns: repeat(2, 1fr); }
+      .form-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .feature-list { columns: 2; }
+    }
+    @media (min-width: 1024px) {
+      .cards { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .profile-grid { grid-template-columns: repeat(3, 1fr); }
+      .container { padding: 0 1.5rem; }
+    }
+
+    /* Small utilities */
+    .muted { color: var(--muted); }
+    .mb-1 { margin-bottom: 0.5rem; }
   </style>
 </head>
 <body>
   <!-- Navigation -->
-  <nav class="container-fluid">
-    <ul>
-      <li><strong>Dr MO</strong></li>
-    </ul>
-    <ul>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#contact" role="button">Contact</a></li>
-    </ul>
+  <nav class="header" role="navigation" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <div class="brand" aria-hidden="false">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" rx="6" fill="hsl(var(--primary-h) var(--primary-s) 30%)"></rect>
+          <path d="M6 12c0-3.314 2.686-6 6-6s6 2.686 6 6-2.686 6-6 6-6-2.686-6-6z" fill="white" opacity="0.06"/>
+        </svg>
+        <div>
+          <div style="font-size:0.95rem; font-weight:700;">Dr MO</div>
+          <div style="font-size:0.78rem; color:var(--muted); margin-top:-0.15rem;">Computational Geophysics</div>
+        </div>
+      </div>
+
+      <div class="nav-links" role="menubar" aria-label="Primary links">
+        <a href="#services">Services</a>
+        <a href="#research">Research</a>
+        <a href="#contact" class="cta" role="button">Contact</a>
+      </div>
+    </div>
   </nav>
 
-  <!-- Main -->
-  <main class="container">
-    <div class="grid">
-      <section>
-        <hgroup>
-          <h2>Computational Geophysics for Business Impact</h2>
-          <h3>Scientific Software & Inversion Solutions • PINN Research • Executive Education</h3>
-        </hgroup>
-        <p class="callout"><span class="pill">Value Proposition</span> Partner with a PhD geophysicist to transform subsurface data into decisions. I build robust <strong>Python</strong> & <strong>MATLAB</strong> tools, deliver <strong>inversion</strong> at scale, and apply <strong>Physics-Informed Neural Networks (PINNs)</strong> for well logging, gravity, GPR, and seismic.</p>
+  <!-- Main content -->
+  <main class="container" role="main" aria-labelledby="page-title">
+    <section class="card-surface" aria-labelledby="page-title" style="padding-top:2rem;">
+      <header>
+        <h1 id="page-title" class="brand-title">Dr MO — Computational Geophysics</h1>
+        <h3 class="subhead">Design Guidelines — Reference-Based & Professional B2B</h3>
+      </header>
 
-        <!-- PHOTO 1: replace the original Unsplash image with the first provided photo -->
-        <figure>
-          <img src="images/photo1.jpg" alt="Multi-monitor geophysics and data visualization workstation" />
-          <figcaption>Photo 1</figcaption>
-        </figure>
+      <p class="callout" role="region" aria-label="Value proposition">
+        <span class="pill" aria-hidden="true">Value Proposition</span>
+        <span style="margin-left:0.5rem;">Reference-Based + Professional B2B: drawing from Linear, Stripe, and GitHub — scientific authority combined with clear technical credibility. This document summarizes colors, typography, layout, components and accessibility for the Dr MO site.</span>
+      </p>
 
-        <h3 id="services">Services</h3>
-        <p>I deliver end‑to‑end solutions—from scoping and feasibility to deployment and training—tailored to research institutes, energy & mining companies, and engineering firms.</p>
-        <ul class="feature-list">
-          <li><strong>Custom Scientific Software</strong> — Toolchains, libraries, & GUIs in <em>Python</em> and <em>MATLAB</em> for geophysical processing and inversion.</li>
-          <li><strong>Inversion at Scale</strong> — Classical and regularized inversions for <em>well logging, gravity, GPR, seismic</em>.</li>
-          <li><strong>PINN Solutions</strong> — Physics‑informed modeling for interval inversion & full‑field reconstruction with UQ.</li>
-          <li><strong>Consulting</strong> — Model design, workflow optimization, code reviews, and technical due diligence.</li>
-          <li><strong>Courses & Executive Training</strong> — Focused workshops for teams: inversion fundamentals, PINN for geophysics, reproducible research.</li>
-          <li><strong>Data to Insight</strong> — Project framing, KPIs, validation plans, and reporting aligned with business outcomes.</li>
+      <!-- Primary Hero Image (photo1) -->
+      <figure aria-labelledby="hero-caption">
+        <img src="images/photo1.jpg" alt="Geophysics workstation with multiple monitors showing code and visualizations" />
+        <figcaption id="hero-caption" class="muted">Geophysics workstation and code — image source: Unsplash</figcaption>
+      </figure>
+
+      <hr class="soft" />
+
+      <!-- Services -->
+      <section id="services" aria-labelledby="services-title" style="margin-top:1rem;">
+        <h2 id="services-title" class="section-title">Design Approach & Core Elements</h2>
+        <h3 class="subhead">Color, typography, layout and components</h3>
+
+        <!-- Color + Typography Summary -->
+        <div style="display:grid; grid-template-columns:1fr; gap:1rem;">
+          <div style="background:transparent; padding:0;">
+            <h3 class="subhead">A. Color Palette</h3>
+            <p class="muted mb-1">Dark Mode Primary (default)</p>
+            <ul class="muted" style="list-style:none; padding-left:0; margin:0;">
+              <li><strong>Background:</strong> rgb(14, 23, 38)</li>
+              <li><strong>Surface/Cards:</strong> rgb(20, 28, 47)</li>
+              <li><strong>Primary Accent:</strong> var(--primary)</li>
+              <li><strong>Secondary Accent:</strong> var(--secondary)</li>
+              <li><strong>Text Primary:</strong> var(--text)</li>
+              <li><strong>Text Muted:</strong> var(--muted)</li>
+            </ul>
+          </div>
+
+          <div style="background:transparent; padding:0;">
+            <h3 class="subhead">B. Typography</h3>
+            <ul class="muted" style="list-style:none; padding-left:0; margin:0;">
+              <li><strong>H1 / Brand:</strong> 2.5rem, Bold</li>
+              <li><strong>H2 / Sections:</strong> 2rem, Semibold</li>
+              <li><strong>H3 / Subhead:</strong> 1.25rem, Medium (muted)</li>
+              <li><strong>Body:</strong> 1rem, Regular (primary text)</li>
+              <li><strong>Small:</strong> 0.85-0.9rem, muted</li>
+              <li><strong>Font stack:</strong> system fonts for performance</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="soft" />
+
+        <p class="mb-1" style="color:var(--text);">Services overview: content-first approach with integrated imagery and clean component patterns.</p>
+
+        <ul class="feature-list" aria-labelledby="services-title">
+          <li><strong>Custom Scientific Software</strong> — Python & MATLAB toolchains, libraries, and APIs.</li>
+          <li><strong>Inversion at Scale</strong> — Well logging, gravity, GPR, seismic.</li>
+          <li><strong>PINN Solutions</strong> — Physics-informed nets for interval inversion and UQ.</li>
+          <li><strong>Consulting</strong> — Model design, code reviews, and technical due diligence.</li>
+          <li><strong>Training</strong> — Hands‑on workshops and executive briefings.</li>
+          <li><strong>Data to Insight</strong> — KPIs, validation plans, and business-aligned reporting.</li>
         </ul>
 
-        <div class="cards" style="margin-top:1rem;">
-          <article class="card">
-            <small class="pill">Software</small>
+        <!-- 3 service cards -->
+        <div class="cards" role="list" aria-label="Service cards">
+          <article class="card-item" role="listitem">
+            <div class="card-pill">Software</div>
             <h4>Python & MATLAB Engineering</h4>
-            <p>Robust packages, unit‑tested pipelines, and clean APIs ready for your R&D or production environments.</p>
+            <p>Robust packages, unit-tested pipelines, and clear APIs for R&D and production.</p>
           </article>
-          <article class="card">
-            <small class="pill">Inversion</small>
+
+          <article class="card-item" role="listitem">
+            <div class="card-pill">Inversion</div>
             <h4>From Data to Models</h4>
-            <p>Deterministic and hybrid methods, with model selection and uncertainty assessment built‑in.</p>
+            <p>Deterministic and hybrid inversion with uncertainty assessment and model selection.</p>
           </article>
-          <article class="card">
-            <small class="pill">Education</small>
+
+          <article class="card-item" role="listitem">
+            <div class="card-pill">Education</div>
             <h4>Courses & Workshops</h4>
-            <p>Customized sessions for scientists and engineers—hands‑on, case‑study driven, and tool‑oriented.</p>
+            <p>Case-driven sessions on inversion fundamentals, PINNs, and reproducible research.</p>
           </article>
         </div>
 
-        <!-- PHOTO 2: replace the second image with the second provided photo -->
-        <figure>
-          <img src="images/photo2.jpg" alt="Screen close-up showing code and scientific plots" />
-          <figcaption>Photo 2</figcaption>
+        <!-- Mid-section image after service cards (photo2) -->
+        <figure aria-labelledby="mid-caption">
+          <img src="images/photo2.jpg" alt="Close-up screen showing code and scientific plots" />
+          <figcaption id="mid-caption" class="muted">Scientific computing and plots — image source: Unsplash</figcaption>
         </figure>
+      </section>
 
-        <h3 id="research">Research & Thought Leadership</h3>
-        <p>I publish, teach, and prototype at the intersection of physics and machine learning: <em>acoustic ocean tomography, interval inversion, and PINN frameworks</em>. Follow along via my <strong>YouTube</strong> channel and research profiles.</p>
+      <hr class="soft" />
 
-        <div class="cards" style="margin-top:1rem;">
-          <article class="card">
-            <small class="pill">YouTube</small>
+      <!-- Research -->
+      <section id="research" aria-labelledby="research-title" style="margin-top:1rem;">
+        <h2 id="research-title" class="section-title">Research & Thought Leadership</h2>
+        <p class="subhead">Publications, prototypes, and technical briefings</p>
+
+        <p class="muted">Focus areas: acoustic ocean tomography, interval inversion, PINN frameworks and data-driven petrophysics.</p>
+
+        <div class="profile-grid" role="list" aria-label="Research profiles">
+          <article class="card-item" role="listitem">
+            <div class="card-pill">YouTube</div>
             <h4>Dr MO — Tech Briefings</h4>
-            <p>Short, practical videos on inversion, PINNs, and scientific software patterns. Tutorials for teams.</p>
-            <p><a href="https://youtube.com/@DrMO" target="_blank" rel="noopener">Visit Channel →</a></p>
+            <p class="muted">Short, practical videos on inversion and scientific software patterns.</p>
           </article>
-          <article class="card">
-            <small class="pill">Profiles</small>
+
+          <article class="card-item" role="listitem">
+            <div class="card-pill">Profiles</div>
             <h4>ResearchGate & ORCID</h4>
-            <p>Publications, datasets, and ongoing projects—stay current with my latest work and collaborations.</p>
-            <p><a href="https://www.researchgate.net/profile/Dr-MO" target="_blank" rel="noopener">ResearchGate →</a> • <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID →</a></p>
+            <p class="muted">Publications, datasets and ongoing collaborations.</p>
           </article>
-          <article class="card">
-            <small class="pill">Network</small>
+
+          <article class="card-item" role="listitem">
+            <div class="card-pill">Network</div>
             <h4>LinkedIn</h4>
-            <p>Connect for consulting, partnerships, and opportunities in geophysics and scientific computing.</p>
-            <p><a href="https://www.linkedin.com/in/dr-mo" target="_blank" rel="noopener">LinkedIn →</a></p>
+            <p class="muted">Connect for consulting, partnerships and opportunities in geophysics.</p>
           </article>
         </div>
 
-        <!-- PHOTO 3: replace the third image with the third provided photo -->
-        <figure>
-          <img src="images/photo3.jpg" alt="Team meeting with data visualizations on a large screen" />
-          <figcaption>Photo 3</figcaption>
+        <!-- Research image after profile cards (photo3) -->
+        <figure aria-labelledby="research-caption">
+          <img src="images/photo3.jpg" alt="Research team collaborating around a large screen with technical diagrams" />
+          <figcaption id="research-caption" class="muted">Research team discussing roadmap — image source: Unsplash</figcaption>
         </figure>
+      </section>
 
-        <h3>Engagement Models</h3>
-        <p>Choose a model aligned with your goals and timelines:</p>
-        <ul>
-          <li><strong>Advisory</strong> (monthly retainer) — strategy, reviews, second opinions.</li>
-          <li><strong>Project</strong> (fixed scope) — deliverables, milestones, documentation.</li>
-          <li><strong>Embedded</strong> (fractional) — part‑time integration with your team.</li>
+      <hr class="soft" />
+
+      <!-- Engagement & Contact -->
+      <section aria-labelledby="engage-title" style="margin-top:1rem;">
+        <h2 id="engage-title" class="section-title">Engagement Models & Contact</h2>
+        <p class="muted">Flexible engagements to match timelines and outcomes.</p>
+
+        <ul class="engagement-list">
+          <li><strong>Advisory</strong> — Monthly retainer for strategy and reviews.</li>
+          <li><strong>Project</strong> — Fixed scope, deliverables, and documentation.</li>
+          <li><strong>Embedded</strong> — Fractional integration with your team.</li>
         </ul>
 
         <hr class="soft" />
 
-        <h3>Recent Focus Areas</h3>
-        <p>PINN‑based interval inversion, high‑frequency acoustic tomography, reproducible inversion workflows, and data‑driven petrophysics.</p>
+        <!-- Contact form -->
+        <section id="contact" aria-labelledby="contact-title" class="contact-form" style="margin-top:1rem;">
+          <h3 id="contact-title" class="section-title">Start a Conversation</h3>
+          <p class="muted">Consulting • Software • Courses</p>
+
+          <form id="contactForm" class="form-grid" novalidate aria-describedby="contact-help">
+            <div>
+              <label for="name" class="muted">Your name</label>
+              <input id="name" name="name" type="text" required aria-required="true" placeholder="Your name" />
+            </div>
+
+            <div>
+              <label for="email" class="muted">Your email</label>
+              <input id="email" name="email" type="email" required aria-required="true" placeholder="you@company.com" />
+            </div>
+
+            <div style="display:flex; align-items:end;">
+              <button type="submit" class="form-submit" id="submitBtn">Send Inquiry</button>
+            </div>
+
+            <div style="grid-column: 1 / -1; margin-top:0.5rem; color:var(--muted);" id="contact-help">
+              Or email: <a href="mailto:contact@drmo-consulting.com" style="color:var(--primary); text-decoration:none;">contact@drmo-consulting.com</a>
+            </div>
+
+            <div id="formStatus" role="status" aria-live="polite" style="grid-column:1/-1; color:var(--muted); margin-top:0.5rem;"></div>
+          </form>
+        </section>
 
       </section>
-    </div>
+    </section>
   </main>
 
-  <!-- Subscribe / Contact CTA -->
-  <section aria-label="Subscribe example">
-    <div class="container">
-      <article>
-        <hgroup>
-          <h2 id="contact">Start a Conversation</h2>
-          <h3>Consulting • Software • Courses</h3>
-        </hgroup>
-        <form class="grid">
-          <input type="text" id="firstname" name="firstname" placeholder="Your name" aria-label="Your name" required />
-          <input type="email" id="email" name="email" placeholder="Your email" aria-label="Your email" required />
-          <button type="submit" onclick="event.preventDefault()">Send Inquiry</button>
-        </form>
-        <p style="margin-top:.5rem;">Or email: <a href="mailto:contact@drmo-consulting.com">contact@drmo-consulting.com</a></p>
-      </article>
-    </div>
-  </section>
-
   <!-- Footer -->
-  <footer class="container">
-    <small>
-      <a href="https://youtube.com/@DrMO" target="_blank" rel="noopener">YouTube</a> •
-      <a href="https://www.researchgate.net/profile/Dr-MO" target="_blank" rel="noopener">ResearchGate</a> •
-      <a href="https://www.linkedin.com/in/dr-mo" target="_blank" rel="noopener">LinkedIn</a> •
-      <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
-    </small>
+  <footer class="site-footer container" role="contentinfo">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+      <div class="muted">© Dr MO — Computational Geophysics</div>
+      <div class="links muted" aria-label="Footer links">
+        <a href="https://youtube.com/@DrMO" style="color:var(--muted); text-decoration:none;">YouTube</a> •
+        <a href="https://www.researchgate.net/profile/Dr-MO" style="color:var(--muted); text-decoration:none;">ResearchGate</a> •
+        <a href="https://www.linkedin.com/in/dr-mo" style="color:var(--muted); text-decoration:none;">LinkedIn</a> •
+        <a href="https://orcid.org/0000-0000-0000-0000" style="color:var(--muted); text-decoration:none;">ORCID</a>
+      </div>
+    </div>
   </footer>
+
+  <!-- Minimal JS: form validation, smooth interactions -->
+  <script>
+    (function(){
+      const form = document.getElementById('contactForm');
+      const nameField = document.getElementById('name');
+      const emailField = document.getElementById('email');
+      const status = document.getElementById('formStatus');
+
+      // email regex (simple, for demo)
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        status.textContent = '';
+        // simple validation
+        const name = nameField.value.trim();
+        const email = emailField.value.trim();
+
+        if(!name){
+          status.textContent = 'Please enter your name.';
+          nameField.focus();
+          return;
+        }
+        if(!email || !emailRegex.test(email)){
+          status.textContent = 'Please enter a valid email address.';
+          emailField.focus();
+          return;
+        }
+
+        // demo-only: don't actually submit
+        status.textContent = 'Thank you — your inquiry was prepared (demo).';
+        // reset lightly after a short delay to show success
+        setTimeout(() => {
+          form.reset();
+        }, 1200);
+      });
+
+      // Accessible keyboard focus for card hover states (optional)
+      document.querySelectorAll('.card-item').forEach((el) => {
+        el.setAttribute('tabindex', '0');
+      });
+
+      // Reduce motion for users who prefer it
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if(prefersReduced && prefersReduced.matches){
+        document.documentElement.style.scrollBehavior = 'auto';
+      }
+    })();
+  </script>
 </body>
 </html>
