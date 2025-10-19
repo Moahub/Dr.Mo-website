@@ -7,162 +7,152 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
     :root {
-      --bg: #0e1726;
-      --surface: #141c2f;
-      --primary: hsl(199, 95%, 62%);
-      --secondary: hsl(180, 74%, 64%);
-      --text-primary: hsl(220, 25%, 92%);
-      --text-muted: hsl(220, 17%, 64%);
+      --bg:#0e1726;
+      --surface:#141c2f;
+      --primary:hsl(199,95%,62%);
+      --secondary:hsl(180,74%,64%);
+      --text-primary:hsl(220,25%,92%);
+      --text-muted:hsl(220,17%,64%);
     }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text-primary);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0;
+    body{
+      background-color:var(--bg);
+      color:var(--text-primary);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      margin:0;
     }
 
-    nav.container-fluid {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(6px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+    /* ===== NAVIGATION ===== */
+    nav.container-fluid{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(6px);
+      background:linear-gradient(180deg,rgba(255,255,255,0.03),transparent);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      padding:0.6rem 1rem;
     }
 
-    nav a[role="button"] {
-      background: var(--primary);
-      border-radius: 999px;
-      color: #fff;
-      padding: 0.5rem 1.25rem;
+    nav ul:first-child li strong{
+      color:var(--primary);
+      font-size:1.3rem;
+      text-shadow:0 0 8px rgba(0,180,216,0.8);
+      letter-spacing:0.03em;
     }
 
-    header {
-      max-width: 72rem;
-      margin: 4rem auto;
-      padding: 0 1rem;
-      text-align: center;
+    nav a[role="button"]{
+      background:var(--primary);
+      border-radius:999px;
+      color:#fff;
+      padding:0.45rem 1.2rem;
     }
 
-    header h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+    nav a:hover{color:var(--secondary);}
+
+    /* ===== HEADER ===== */
+    header{
+      max-width:72rem;
+      margin:4rem auto;
+      padding:0 1rem;
+      text-align:center;
+    }
+    header h1{
+      font-size:2.5rem;
+      font-weight:700;
+      letter-spacing:-0.02em;
+    }
+    header p{
+      color:var(--text-muted);
+      font-size:1.1rem;
+      max-width:40rem;
+      margin:1rem auto 0;
     }
 
-    header p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      max-width: 40rem;
-      margin: 1rem auto 0;
+    /* ===== SECTIONS ===== */
+    section{
+      max-width:72rem;
+      margin:0 auto;
+      padding:5rem 1rem;
+    }
+    section h2{
+      font-size:2rem;
+      font-weight:600;
+      color:#fff;
+      margin-bottom:1.5rem;
+      border-left:5px solid var(--primary);
+      padding-left:0.75rem;
     }
 
-    section {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 5rem 1rem;
+    .grid{display:grid;gap:1.5rem;}
+    @media(min-width:768px){
+      .grid-3{grid-template-columns:repeat(3,1fr);}
     }
 
-    section h2 {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 1.5rem;
-      border-left: 5px solid var(--primary);
-      padding-left: 0.75rem;
+    .card{
+      background:var(--surface);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px;
+      padding:2rem;
+      box-shadow:0 8px 24px rgba(0,0,0,0.25);
+      transition:transform 0.2s ease,border-color 0.2s ease;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:var(--secondary);
+    }
+    .card h3{color:var(--secondary);margin-bottom:0.5rem;}
+    .card p{color:var(--text-muted);}
+
+    img{
+      width:100%;
+      height:auto;
+      border-radius:14px;
+      margin-top:1rem;
+    }
+    figcaption{
+      font-size:0.9rem;
+      color:var(--text-muted);
+      margin-top:0.5rem;
     }
 
-    .grid {
-      display: grid;
-      gap: 1.5rem;
+    /* ===== FORMS ===== */
+    form{display:grid;gap:1rem;}
+    @media(min-width:768px){form{grid-template-columns:repeat(3,1fr);}}
+    input,textarea{
+      background:var(--surface);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:8px;
+      color:var(--text-primary);
     }
-
-    @media (min-width: 768px) {
-      .grid-3 { grid-template-columns: repeat(3, 1fr); }
-      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    button{
+      background:var(--primary);
+      border:none;
+      border-radius:999px;
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
     }
+    button:hover{background:var(--secondary);}
 
-    .card {
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+    /* ===== FOOTER ===== */
+    footer{
+      border-top:1px solid rgba(255,255,255,0.08);
+      padding:3rem 1rem;
+      text-align:center;
+      color:var(--text-muted);
     }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--secondary);
-    }
-
-    .card h3 {
-      color: var(--secondary);
-      margin-bottom: 0.5rem;
-    }
-
-    .card p { color: var(--text-muted); }
-
-    img {
-      width: 100%;
-      height: auto;
-      border-radius: 14px;
-      margin-top: 1rem;
-    }
-
-    figcaption {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-top: 0.5rem;
-    }
-
-    form {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      form { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    input, textarea {
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      color: var(--text-primary);
-    }
-
-    button {
-      background: var(--primary);
-      border: none;
-      border-radius: 999px;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    button:hover { background: var(--secondary); }
-
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 3rem 1rem;
-      text-align: center;
-      color: var(--text-muted);
-    }
-
-    footer a { color: var(--primary); }
-
-    hr {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-      margin: 3rem 0;
+    footer a{color:var(--primary);}
+    hr{
+      border:none;
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+      margin:3rem 0;
     }
   </style>
 </head>
 
 <body>
+  <!-- Navigation -->
   <nav class="container-fluid">
     <ul><li><strong>Dr MO</strong></li></ul>
     <ul>
@@ -173,70 +163,77 @@
     </ul>
   </nav>
 
+  <!-- Intro -->
   <header>
     <h1>Computational Geophysics & Software Solutions</h1>
-    <p>Advanced inversion, PINNs, and data-driven subsurface modeling — bridging academic research and industrial innovation.</p>
+    <p>Advancing geophysical exploration through computational inversion, physics-informed neural networks, and AI-based modeling for the energy and mining industries.</p>
   </header>
 
+  <!-- Services -->
   <section id="services">
     <h2>Services</h2>
     <div class="grid grid-3">
       <div class="card">
         <h3>Scientific Software Development</h3>
-        <p>Custom tools in Python / MATLAB for inversion, simulation, and AI-based geophysical interpretation.</p>
+        <p>Custom applications in Python and MATLAB for inversion, simulation, and data interpretation; tailored to research and industry workflows.</p>
       </div>
       <div class="card">
         <h3>Computational Inversion</h3>
-        <p>Advanced algorithms for well-logging, gravity, GPR, and seismic applications.</p>
+        <p>Advanced algorithms for well logging, gravity, GPR, and seismic data; optimized for speed, stability, and physical realism.</p>
       </div>
       <div class="card">
-        <h3>Consulting & Training</h3>
-        <p>Advisory and educational programs in computational geophysics, data analytics, and applied machine learning.</p>
+        <h3>Consulting and Training</h3>
+        <p>Specialized consulting and educational sessions in computational geophysics, AI integration, and applied data analytics.</p>
       </div>
     </div>
     <figure>
       <img src="Geophysics_workstation_with_code_displays_25c5d553.png" alt="Geophysics workstation with code displays">
-      <figcaption>High-performance geophysics workstation — visualization and inversion environments.</figcaption>
+      <figcaption>High-performance geophysics workstation, supporting model visualization and inversion experiments.</figcaption>
     </figure>
   </section>
 
+  <!-- YouTube Hub -->
   <section id="youtube">
-    <h2>Media & Learning Hub — YouTube</h2>
-    <p>Follow <strong>Dr MO</strong> on YouTube for tutorials, research explainers, and computational geophysics insights.  
-    The channel is the primary hub supporting open-source tools and education in scientific computing.</p>
-    <div class="card" style="text-align:center; margin-top:2rem;">
-      <iframe width="100%" height="360" src="https://www.youtube.com/embed?listType=user_uploads&list=Dr.Mo-geo" 
+    <h2>Media and Learning Hub</h2>
+    <p>Visit <strong>Dr MO</strong> on YouTube for tutorials, research explainers, and computational geophysics insights.  
+    The channel serves as the central platform for education, outreach, and funding of open scientific software projects.</p>
+    <div class="card" style="text-align:center;margin-top:2rem;">
+      <!-- The embed will still render a blank player if no uploads exist -->
+      <iframe width="100%" height="360"
+        src="https://www.youtube.com/embed/videoseries?list=UUVCVgnzUAlVRH6qM1BZqRkqVQ"
         title="Dr MO YouTube Channel" frameborder="0" allowfullscreen></iframe>
       <p><a href="https://www.youtube.com/@Dr.Mo-geo" target="_blank" role="button" style="margin-top:1rem;">Visit Channel</a></p>
     </div>
     <figure>
-      <img src="Scientific_computing_code_analysis_display_1b593081.png" alt="Scientific computing code analysis">
-      <figcaption>Scientific computing and code analysis — powering PINN-based models and AI workflows.</figcaption>
+      <img src="Scientific_computing_code_analysis_display_1b593081.png" alt="Scientific computing code analysis display">
+      <figcaption>Scientific computing and data analysis — core to AI-assisted inversion and modeling workflows.</figcaption>
     </figure>
   </section>
 
+  <!-- Research -->
   <section id="research">
-    <h2>Research & Innovation</h2>
+    <h2>Research and Innovation</h2>
     <div class="grid grid-3">
       <div class="card">
-        <h3>PINN-Based Modeling</h3>
-        <p>Integrating physics-informed neural networks to enhance subsurface characterization accuracy.</p>
+        <h3>PINN Modeling</h3>
+        <p>Applying physics-informed neural networks to improve parameter estimation and subsurface representation.</p>
       </div>
       <div class="card">
-        <h3>AI-Accelerated Inversion</h3>
-        <p>Combining geophysical theory with machine learning to optimize inversion speed and quality.</p>
+        <h3>AI Inversion</h3>
+        <p>Integrating machine learning with classical inversion to accelerate convergence and enhance prediction accuracy.</p>
       </div>
       <div class="card">
-        <h3>Collaborative Research</h3>
-        <p>Partnerships with academic and industrial teams advancing computational exploration methods.</p>
+        <h3>Collaborative Projects</h3>
+        <p>Working with academic and industrial partners to develop next-generation computational geophysics solutions.</p>
       </div>
     </div>
     <figure>
       <img src="Research_team_technical_collaboration_meeting_7f73b75c.png" alt="Research team technical collaboration">
-      <figcaption>Research and collaboration — advancing computational geophysics innovation.</figcaption>
+      <figcaption>Research and collaboration, advancing innovation in computational geophysics and AI modeling.</figcaption>
     </figure>
   </section>
 
+  <!-- Contact -->
   <section id="contact">
     <h2>Contact Dr MO</h2>
     <form>
@@ -247,14 +244,15 @@
     <p style="margin-top:1rem;">Email: <a href="mailto:contact@drmo-consulting.com">contact@drmo-consulting.com</a></p>
   </section>
 
+  <!-- Footer -->
   <footer>
     <small>
-      <a href="https://www.youtube.com/@Dr.Mo-geo" target="_blank">YouTube</a> •
-      <a href="https://www.linkedin.com/in/drmo-geophysics" target="_blank">LinkedIn</a> •
-      <a href="https://www.researchgate.net/profile/Dr-MO" target="_blank">ResearchGate</a> •
+      <a href="https://www.youtube.com/@Dr.Mo-geo" target="_blank">YouTube</a> • 
+      <a href="https://www.linkedin.com/in/drmo-geophysics" target="_blank">LinkedIn</a> • 
+      <a href="https://www.researchgate.net/profile/Dr-MO" target="_blank">ResearchGate</a> • 
       <a href="https://orcid.org/0000-0000-0000-0000" target="_blank">ORCID</a>
     </small>
-    <p style="margin-top:0.5rem;">© 2025 Dr MO — Computational Geophysics & Software Solutions</p>
+    <p style="margin-top:0.5rem;">© 2025 Dr MO — Computational Geophysics and Software Solutions</p>
   </footer>
 </body>
 </html>
