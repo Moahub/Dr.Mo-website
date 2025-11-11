@@ -1,2 +1,2 @@
 # Dr.Mo
-Computational Geophysics &amp; Software Solutions
+Computational Geophysics & Software Solutions
